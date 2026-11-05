@@ -6,6 +6,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# Build file paths from this file's location, so the app finds the data files
+# whether it runs locally or on Streamlit Cloud.
+LAB_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CSV_PATH = os.path.join(LAB_FOLDER, "data.csv")
+JSON_PATH = os.path.join(LAB_FOLDER, "data.json")
+
 # PAGE CONFIGURATION
 st.set_page_config(
     page_title="Visuals",
@@ -18,11 +24,11 @@ st.title("Temperature Data Visualizations 📈")
 
 # PART 1: GRAPHS FROM data.json
 # --- YOUR CODE GOES HERE ---
-with open("data.json") as f:
+with open(JSON_PATH) as f:
     data = json.load(f)
 
 chart_title = data["chart_title"]
-cities = [key for key in data if key != "chart_title"]
+cities = [key for key in data if key != "chart_title"]  
 
 # Visualization 1: STATIC (simple bar chart)
 st.subheader(chart_title)
@@ -62,8 +68,8 @@ st.divider()
 st.header("Ideal Temperature Survey Results")
 
 # Load the CSV data
-if os.path.exists("data.csv") and os.path.getsize("data.csv") > 0:
-    survey_df = pd.read_csv("data.csv")
+if os.path.exists(CSV_PATH) and os.path.getsize(CSV_PATH) > 0:
+    survey_df = pd.read_csv(CSV_PATH)
 else:
     survey_df = pd.DataFrame(columns=["Category", "Value"])
 
@@ -73,6 +79,7 @@ survey_df = survey_df.dropna()
 if survey_df.empty:
     st.info("No survey responses yet. Add some on the Survey page!")
 else:
+    
     st.subheader("Responses by City (Static)")
 
     counts = survey_df["Category"].value_counts().reset_index()
@@ -86,6 +93,7 @@ else:
     )
     st.plotly_chart(pie)
 
+    
     st.subheader("Average Ideal Temperature by City (Dynamic)")
 
     if "min_temp" not in st.session_state:
@@ -105,6 +113,7 @@ else:
         avg_temp = filtered.groupby("Category")["Value"].mean()
         st.bar_chart(avg_temp, x_label="City", y_label="Average Ideal Temperature (°F)")
 
+        # EXTRA CREDIT: mean and median that update with the slider
         current_mean = filtered["Value"].mean()
         current_median = filtered["Value"].median()
 
