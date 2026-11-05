@@ -1,0 +1,107 @@
+{
+    "chart_title": "Average Temperature in First Half of a Year",
+    "Atlanta": [
+        {
+            "label": "Jan",
+            "value": 43
+        },
+        {
+            "label": "Feb",
+            "value": 47
+        },
+        {
+            "label": "Mar",
+            "value": 54
+        },
+        {
+            "label": "April",
+            "value": 62
+        },
+        {
+            "label": "May",
+            "value": 70
+        },
+        {
+            "label": "June",
+            "value": 77
+        }
+    ],
+    "Chicago": [
+        {
+            "label": "Jan",
+            "value": 24
+        },
+        {
+            "label": "Feb",
+            "value": 28
+        },
+        {
+            "label": "Mar",
+            "value": 38
+        },
+        {
+            "label": "April",
+            "value": 49
+        },
+        {
+            "label": "May",
+            "value": 60
+        },
+        {
+            "label": "June",
+            "value": 70
+        }
+    ],
+    "Miami": [
+        {
+            "label": "Jan",
+            "value": 68
+        },
+        {
+            "label": "Feb",
+            "value": 70
+        },
+        {
+            "label": "Mar",
+            "value": 72
+        },
+        {
+            "label": "April",
+            "value": 75
+        },
+        {
+            "label": "May",
+            "value": 79
+        },
+        {
+            "label": "June",
+            "value": 82
+        }
+    ],
+    "Seattle": [
+        {
+            "label": "Jan",
+            "value": 41
+        },
+        {
+            "label": "Feb",
+            "value": 43
+        },
+        {
+            "label": "Mar",
+            "value": 46
+        },
+        {
+            "label": "April",
+            "value": 50
+        },
+        {
+            "label": "May",
+            "value": 56
+        },
+        {
+            "label": "June",
+            "value": 61
+        }
+    ]
+}
