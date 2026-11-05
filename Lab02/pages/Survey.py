@@ -3,7 +3,12 @@
 
 import streamlit as st
 import pandas as pd
-import os # The 'os' module is used for file system operations (e.g. checking if a file exists).
+import os 
+
+# Build file paths from this file's location, so the app finds the data files
+# whether it runs locally or on Streamlit Cloud.
+LAB_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CSV_PATH = os.path.join(LAB_FOLDER, "data.csv")
 
 # PAGE CONFIGURATION
 st.set_page_config(
@@ -24,7 +29,7 @@ with st.form("survey_form"):
 
     if submitted:
         # Clean the inputs so they're stored consistently
-        category = category_input.strip().title().replace(",", "")   # commas would break CSV columns
+        category = category_input.strip().title().replace(",", "")
         value_text = value_input.strip()
 
         if category == "":
@@ -35,11 +40,12 @@ with st.form("survey_form"):
             except ValueError:
                 st.error("Please enter your ideal temperature as a number (e.g., 72).")
             else:
-                with open("data.csv", "r") as f:
+                
+                with open(CSV_PATH, "r") as f:
                     content = f.read()
                 needs_newline = content != "" and not content.endswith("\n")
 
-                with open("data.csv", "a") as f:
+                with open(CSV_PATH, "a") as f:     
                     if needs_newline:
                         f.write("\n")
                     f.write(f"{category},{value}\n")
@@ -50,16 +56,14 @@ with st.form("survey_form"):
 
 # DATA DISPLAY
 # This section shows the current contents of the CSV file, which helps in debugging.
-st.divider()
+st.divider() 
 st.header("Current Data in CSV")
 
 # Check if the CSV file exists and is not empty before trying to read it.
-if os.path.exists('data.csv') and os.path.getsize('data.csv') > 0:
+if os.path.exists(CSV_PATH) and os.path.getsize(CSV_PATH) > 0:
     # Read the CSV file into a pandas DataFrame.
-    current_data_df = pd.read_csv('data.csv')
+    current_data_df = pd.read_csv(CSV_PATH)
     # Display the DataFrame as a table.
     st.dataframe(current_data_df)
 else:
     st.warning("The 'data.csv' file is empty or does not exist yet.")
-
-
